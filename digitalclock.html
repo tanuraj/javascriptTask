@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>D I G I T A L - C L O C K</h2>
+    <div id="timer"></div>
+    <h2>D I G I T A L - C L O C K WITH AM/PM</h2>
+    <div id="timer2"></div>
+
+    <script>
+      function clock() {
+        var d = new Date();
+        var tim = d.getHours() + " : " + d.getMinutes() + " : " + d.getSeconds();
+        document.getElementById("timer").innerHTML = tim;
+        var meridiem;
+        var time = d.getHours();
+        if (time > 12) {
+          time = time - 12;
+          meridiem = " PM";
+        } else {
+          meridiem = " AM";
+        }
+        var meridiemTime = time + " : " + d.getMinutes() + meridiem;
+        document.getElementById("timer2").innerHTML = meridiemTime;
+      }
+      setInterval(clock, 1000);
+    </script>
+  </body>
+</html>

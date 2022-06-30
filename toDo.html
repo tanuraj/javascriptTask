@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      span {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>TO DO List</h1>
+
+    <h3>Add Item</h3>
+    <input type="text" id="detail" name="detail" size="100" />
+    <span id="detailErr"></span><br />
+    <input type="button" id="saveDetail" value="Submit" onclick="addItem()" />
+    <br />
+
+    <h3>To Do List</h3>
+    <table>
+      <tr>
+        <th>TO DO Items</th>
+        <th>Action</th>
+      </tr>
+      <tbody id="dataTable">
+        <tr>
+          <td id="detail_1">sdf</td>
+          <td><button id="edit_1" onclick="editItem(this)">Edit</button> <button id="del_1" onclick="deleteItem(this)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      function addItem() {
+        var detail = document.getElementById("detail").value;
+        if (detail == "") {
+          document.getElementById("detailErr").textContent = "Please enter the details.";
+        } else {
+          document.getElementById("detailErr").textContent = "";
+          const trLength = document.getElementsByTagName("tr").length;
+          const data =
+            '<tr id="tr_' +
+            trLength +
+            '"><td id="detail_' +
+            trLength +
+            '"> ' +
+            detail +
+            '</td><td><button id="edit_' +
+            trLength +
+            '" onClick="editItem(this)">Edit</button> <button id="del_' +
+            trLength +
+            '" onClick="deleteItem(this)">Delete</button></td></tr>';
+          const newRow = document.getElementById("dataTable").insertRow();
+          newRow.innerHTML = data;
+        }
+      }
+
+      function editItem(obj) {
+        const id = obj.id;
+        const idCount = id.split("_")[1];
+        var detailEle = document.getElementById("detail_" + idCount);
+        const detailTxt = document.getElementById("detail_" + idCount).innerText;
+        const innerHtml =
+          '<input type="text" id="editDetail_' +
+          idCount +
+          '" name="editDetail_' +
+          idCount +
+          '" size="50" value=' +
+          detailTxt +
+          ' /><span id="editDetailErr_' +
+          idCount +
+          '"></span><br /> <input type="button" id="editDetail_' +
+          idCount +
+          '" value="Submit" onclick="saveEditItem(' +
+          idCount +
+          ')" />';
+        detailEle.innerHTML = innerHtml;
+      }
+
+      function saveEditItem(idCount) {
+        var detail = document.getElementById("editDetail_" + idCount).value;
+        if (detail == "") {
+          document.getElementById("editDetailErr_" + idCount).textContent = "Please enter the details.";
+        } else {
+          document.getElementById("editDetailErr_" + idCount).textContent = "";
+          document.getElementById("detail_" + idCount).innerHTML = detail;
+        }
+      }
+
+      function deleteItem(obj) {
+        if (confirm("Do you really want to delete this list item?")) {
+          obj.parentNode.parentNode.parentNode.removeChild(obj.parentNode.parentNode);
+        }
+      }
+    </script>
+  </body>
+</html>

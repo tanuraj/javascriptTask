@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td, th {
+        border: 1px solid #000;
+        text-align: left;
+        padding: 8px;
+      }
+			th {background-color: #dddddd; }
+      span { color: red; }
+    </style>
+  </head>
+  <body>
+    <h2>Fetch Example</h2>
+    <table>
+      <tr>
+        <th width="3%">Id</th>
+        <th width="7%">User Id</th>
+        <th width="20%">Title</th>
+        <th>Body</th>
+      </tr>
+      <tbody id="dataTable">
+        
+      </tbody>
+    </table>
+    <script>
+      let api = "https://jsonplaceholder.typicode.com/posts";
+      fetch(api)
+        .then((res) => res.json())
+        .then((userDetails) => {
+					const userView = userDetails.map(data =>`<tr><td>${data.id}</td><td>${data.userId}</td><td>${data.title}</td><td>${data.body}</td></tr>`).join('');
+					console.log(userView);
+					const dataTable = document.getElementById("dataTable");
+					dataTable.innerHTML = userView;
+				});
+    </script>
+  </body>
+</html>
